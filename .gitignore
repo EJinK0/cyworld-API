@@ -1,0 +1,15 @@
+# 빌드 결과물
+/build/
+target/
+
+# IntelliJ
+.idea/
+*.iml
+
+# 환경파일
+application-*.yml
+application.properties
+
+# 기타
+.DS_Store
+*.log
