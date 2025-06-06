@@ -19,14 +19,26 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberService memberService;
 
-    @PostMapping(value = "/new")
-    public ResponseEntity<CommonResponseDto> create(@RequestBody Member member) {
+    @GetMapping(value = "/getMember")
+    public ResponseEntity<CommonResponseDto> getMember(@RequestParam String memberId) {
         try {
-            String memberUUID = memberService.join(member);
+            return ResponseEntity.ok(CommonResponseDto.builder()
+                    .statusCode(StatusCode.SUCCESS)
+                    .build());
+        } catch (Exception ex) {
+            return ResponseEntity.ok(CommonResponseDto.builder()
+                    .statusCode(StatusCode.NOT_FOUND)
+                    .build());
+        }
+    }
+
+    @PostMapping(value = "/validateMemberId")
+    public ResponseEntity<CommonResponseDto> validateMemberId(@RequestParam String memberId) {
+        try {
+            memberService.validateMemberId(memberId);
 
             return ResponseEntity.ok(CommonResponseDto.builder()
                     .statusCode(StatusCode.SUCCESS)
-                    .data(memberUUID)
                     .build());
         } catch (Exception ex) {
             return ResponseEntity.ok(CommonResponseDto.builder()

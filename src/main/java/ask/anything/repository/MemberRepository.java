@@ -1,31 +1,10 @@
 package ask.anything.repository;
 
 import ask.anything.entity.Member;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import java.util.Optional;
 
-@Repository
-public class MemberRepository {
-    @PersistenceContext
-    private EntityManager em;
-
-    public void save(Member member) {
-        em.persist(member);
-    }
-    public Member findOne(Long id) {
-        return em.find(Member.class, id);
-    }
-    public List<Member> findAll() {
-        return em.createQuery("select m from Member m", Member.class)
-                .getResultList();
-    }
-    public List<Member> findByName(String nickName) {
-        return em.createQuery("select m from Member m where m.nickName = :nickName",
-                        Member.class)
-                .setParameter("nickName", nickName)
-                .getResultList();
-    }
+public interface MemberRepository extends JpaRepository<Member, String> {
+    Optional<Member> findByMemberId(String memberId);
 }

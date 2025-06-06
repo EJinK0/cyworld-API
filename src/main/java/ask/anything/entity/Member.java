@@ -9,12 +9,8 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import java.util.UUID;
-
 
 @Entity
 @Table(name = "MEMBER")
@@ -23,13 +19,32 @@ import java.util.UUID;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+public class Member extends BaseDatetime{
     @Id
     @Schema(description = "사용자 아이디", example = "id")
-    @GeneratedValue
     @JdbcTypeCode(SqlTypes.CHAR)
-    @Column(name = "ID", length = 36, updatable = false, nullable = false, unique = true)
-    private UUID id;
+    @Column(name = "MEMBER_NO", length = 36, updatable = false, nullable = false, unique = true)
+    private String memberNo;
+
+    @Column(name = "MEMBER_ID")
+    @Comment("아이디")
+    private String memberId;
+
+    @Column(name = "MEMBER_PW")
+    @Comment("비밀번호")
+    private String memberPw;
+
+    @Column(name = "NAME")
+    @Comment("이름")
+    private String name;
+
+    @Column(name = "GENDER")
+    @Comment("성별")
+    private String gender;
+
+    @Column(name = "BIRTHDAY")
+    @Comment("생년월일")
+    private String birthDay;
 
     @Column(name = "NICKNAME")
     @Comment("닉네임")

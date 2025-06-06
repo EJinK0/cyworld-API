@@ -11,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 
 @Getter
 public class CommonResponseDto<T> {
-
     // 0000 : 이면 성공
     // 그 외 실패.
     @Schema(description = "상태코드", example = "0000")
