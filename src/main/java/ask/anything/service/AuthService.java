@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.UUID;
 
@@ -28,7 +29,9 @@ public class AuthService {
             String encodedPassword = passwordEncoder.encode(dto.getPassword());
 
             AuthTokenDto authTokenDto = authTokensGenerator.generate(dto.getUserid(), encodedPassword);
-            log.info("[회원가입] signUp : " + authTokenDto);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            log.info("[회원가입] signUp : " + objectMapper.writeValueAsString(authTokenDto));
 
             memberRepository.save(
                 Member.builder()
