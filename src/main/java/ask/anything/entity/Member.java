@@ -49,4 +49,8 @@ public class Member extends BaseDatetime{
     @Column(name = "NICKNAME")
     @Comment("닉네임")
     private String nickName;
+
+    @Column(name = "ROLE")
+    @Comment("역할")
+    private String role;
 }
