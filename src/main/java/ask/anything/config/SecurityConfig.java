@@ -1,6 +1,9 @@
 package ask.anything.config;
 
 
+import ask.anything.jwt.LoginFilter;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,12 +13,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.firewall.DefaultHttpFirewall;
 import org.springframework.security.web.firewall.HttpFirewall;
 
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfig {
     //private final JwtTokenProvider jwtTokenProvider;
     //private final CorsFilter       corsFilter;
@@ -42,8 +48,9 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             ) // 경로별 인가 작업
             .sessionManagement((session) -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // 세션 설정
-
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            ) // 세션 설정
+            .addFilterAt(LoginFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
